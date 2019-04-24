@@ -82,26 +82,46 @@ class _RadialSeekBarState extends State<RadialSeekBar> {
         width: double.infinity,
         height: double.infinity,
         color: Colors.transparent,
-        child: Center(
-          child: SizedBox(
-            width: 125.0,
-            height: 125.0,
-            child: RadioSeekBar(
-              progressPer:  _progress,
-              progressColor: accentColor,
-              thumbColor: accentColor,
-              thumbPos: thumbPos,
-              trackColor: Colors.grey.withOpacity(0.5),
-              trackWidth: 1,
-              child: ClipOval(
-                clipper: CircleClip(),
-                child: Image.network(
-                  demoPlaylist.songs[0].albumArtUrl,
-                  fit: BoxFit.cover,
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: SizedBox(
+                width: 230.0,
+                height: 230.0,
+                child: Transform.rotate(
+                  angle: thumbPos * 6.2,
+                  child: ClipOval(
+                    clipper: CircleClip(),
+                    child: Image.asset(
+                      "assets/images/disk.png",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              ),
+            ),
+            Center(
+              child: SizedBox(
+                width: 125.0,
+                height: 125.0,
+                child: RadioSeekBar(
+                  progressPer:  _progress,
+                  progressColor: progressColor,
+                  thumbColor: progressColor,
+                  thumbPos: thumbPos,
+                  trackColor: Colors.grey.withOpacity(0.5),
+                  trackWidth: 1,
+                  child: ClipOval(
+                    clipper: CircleClip(),
+                    child: Image.network(
+                      demoPlaylist.songs[0].albumArtUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

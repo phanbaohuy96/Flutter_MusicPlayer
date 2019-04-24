@@ -69,7 +69,6 @@ class _HomePlayerState extends State<HomePlayer> {
                     progress: playBackProgress,
                     seekPer: _seekPer,
                     onSeekRequested: (seek){
-                      print("onSeekRequested");
                       setState(() {
                         _seekPer = seek; 
                       });
