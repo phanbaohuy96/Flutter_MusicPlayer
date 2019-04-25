@@ -46,7 +46,7 @@ class _RadioSeekBarState extends State<RadioSeekBar> {
 class RadioSeekBarPainter extends CustomPainter{
 
   final double trackWidth, progressWitdh, thumbSize, progressPer, thumbPos;
-  final Paint trackPaint, progressPaint, thumbPaint;
+  final Paint trackPaint, progressPaint, subProgressPaint, thumbPaint;
 
   RadioSeekBarPainter({
     @required this.trackWidth, 
@@ -59,6 +59,7 @@ class RadioSeekBarPainter extends CustomPainter{
     @required thumbColor
     }) : trackPaint = Paint() ..color = trackColor ..style = PaintingStyle.stroke ..strokeWidth = trackWidth,
          progressPaint = Paint() ..color = progressColor ..style = PaintingStyle.stroke ..strokeWidth = progressWitdh ..strokeCap = StrokeCap.round,
+         subProgressPaint = Paint() ..color = progressColor.withOpacity(0.5) ..style = PaintingStyle.stroke ..strokeWidth = progressWitdh ..strokeCap = StrokeCap.round,
          thumbPaint = Paint() ..color = thumbColor ..style = PaintingStyle.fill;
 
   @override
@@ -72,6 +73,18 @@ class RadioSeekBarPainter extends CustomPainter{
     //Paint track
     canvas.drawCircle(center, radius, trackPaint);
 
+    //Paint sub progress
+    final subProgressAngle =  2 * (pi ?? 3.14) * (thumbPos ?? 0.0);   
+    canvas.drawArc(
+      Rect.fromCircle(
+        center: center,
+        radius: radius
+      ),
+      -pi / 2, 
+      subProgressAngle, 
+      false, 
+      subProgressPaint);
+
     //Paint progress
     final progressAngle =  2 * (pi ?? 3.14) * (progressPer ?? 0.0);   
     canvas.drawArc(
@@ -83,7 +96,7 @@ class RadioSeekBarPainter extends CustomPainter{
       progressAngle, 
       false, 
       progressPaint);
-
+    
     //paint thumb
     final thumbRadius = thumbSize / 2.0;    
     final thumbAngle = 2 * (pi ?? 3.14) * (thumbPos ?? 0.0) - (pi / 2);
