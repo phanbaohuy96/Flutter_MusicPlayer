@@ -25,8 +25,7 @@ class _HomePlayerState extends State<HomePlayer> {
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.menu, color: Colors.grey,),
-          onPressed: (){},
-          
+          onPressed: (){},          
         )
       ],
     );
@@ -47,7 +46,15 @@ class _HomePlayerState extends State<HomePlayer> {
           children: <Widget>[
             //Seek bar
             Expanded(
-              child: AudioRadialSeekBar()
+              child: AudioPlaylistComponent(
+                playlistBuilder: (context, player, child){
+                String albumArtUrl = demoPlaylist.songs[player.activeIndex].albumArtUrl;
+
+                  return AudioRadialSeekBar(
+                    albumArtUrl: albumArtUrl
+                  );
+                }
+              )
             ),
           
             // Visualizer
@@ -57,7 +64,20 @@ class _HomePlayerState extends State<HomePlayer> {
             ),
 
             // Song title, artist name and controls
-            new BottomControls()
+            AudioPlaylistComponent(
+              playlistBuilder: (context, player, child){
+                String songTitle = demoPlaylist.songs[player.activeIndex].songTitle;
+                String artist = demoPlaylist.songs[player.activeIndex].songTitle;
+
+                return Container(
+                  child: BottomControls(
+                    songTitle: songTitle,
+                    artist: artist,
+                  )
+                );
+              }
+            )
+            
           ],
         ),
       ),

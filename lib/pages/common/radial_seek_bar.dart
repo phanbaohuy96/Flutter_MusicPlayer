@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:fluttery/gestures.dart';
-import 'package:music_player/models/song.dart';
 import 'package:music_player/pages/common/radio_seek_bar.dart';
 import 'package:music_player/styles/colors_style.dart';
 
@@ -11,8 +10,9 @@ class RadialSeekBar extends StatefulWidget {
   final double progress;
   final double seekPer;
   final Function(double) onSeekRequested;
+  final Widget child;
 
-  const RadialSeekBar({Key key, this.seekPer = 0.0, this.progress, this.onSeekRequested}) : super(key: key);
+  const RadialSeekBar({Key key, this.seekPer = 0.0, this.progress, this.onSeekRequested, this.child}) : super(key: key);
 
   @override
   _RadialSeekBarState createState() => _RadialSeekBarState();
@@ -114,10 +114,7 @@ class _RadialSeekBarState extends State<RadialSeekBar> {
                 trackWidth: 1,
                 child: ClipOval(
                   clipper: CircleClip(),
-                  child: Image.network(
-                    demoPlaylist.songs[0].albumArtUrl,
-                    fit: BoxFit.cover,
-                  ),
+                  child: widget.child,
                 ),
               ),
             ),

@@ -3,6 +3,10 @@ import 'package:fluttery_audio/fluttery_audio.dart';
 import 'package:music_player/pages/common/radial_seek_bar.dart';
 
 class AudioRadialSeekBar extends StatefulWidget {
+  final String albumArtUrl;
+
+  const AudioRadialSeekBar({Key key, this.albumArtUrl}) : super(key: key);
+
   @override
   _AudioRadialSeekBarState createState() => _AudioRadialSeekBarState();
 }
@@ -38,6 +42,11 @@ class _AudioRadialSeekBarState extends State<AudioRadialSeekBar> {
             final seekMillis = (player.audioLength.inMilliseconds * seek).round();
             player.seek(new Duration(milliseconds: seekMillis));
           },
+
+          child: Image.network(
+            widget.albumArtUrl,
+            fit: BoxFit.cover,
+          ) 
         );
       },
     );

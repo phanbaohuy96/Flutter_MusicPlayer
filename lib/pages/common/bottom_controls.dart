@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:fluttery_audio/fluttery_audio.dart';
-import 'package:music_player/models/song.dart';
 import 'package:music_player/styles/colors_style.dart';
 import 'package:music_player/styles/text_styles.dart';
 
 class BottomControls extends StatelessWidget {
+
+  final String songTitle, artist;
+
   const BottomControls({
-    Key key,
+    Key key, this.songTitle, this.artist,
   }) : super(key: key);
 
   @override
@@ -26,27 +28,23 @@ class BottomControls extends StatelessWidget {
                   text: TextSpan(
                     children: [
                       TextSpan(
-                        text: "${demoPlaylist.songs[0].songTitle}\n",
+                        text: "$songTitle\n",
                         style: songTitleStyle
                       ),
                       TextSpan(                        
-                        text: "${demoPlaylist.songs[0].artist}\n",
+                        text: "$artist\n",
                         style: actistNameStyle
                       ),
                     ]
                   ),
                 ),
               ),
-              Row(                  
+              Row(
+                    
                 children: <Widget>[
                   Expanded(child: SizedBox(),),
 
-                  IconButton(
-                    splashColor: lightAccentColor,
-                    highlightColor: lightAccentColor.withOpacity(0.5),
-                    icon: Icon(Icons.skip_previous, color: Colors.white, size: 40,),
-                    onPressed: (){},
-                  ),
+                  new PreviousButton(),
 
                   Expanded(child: SizedBox(),),
 
@@ -54,12 +52,7 @@ class BottomControls extends StatelessWidget {
 
                   Expanded(child: SizedBox(),),
 
-                  IconButton(
-                    splashColor: lightAccentColor,
-                    highlightColor: lightAccentColor.withOpacity(0.5),
-                    icon: Icon(Icons.skip_next, color: Colors.white, size: 40,),
-                    onPressed: (){},
-                  ),
+                  new NextButton(),
 
                   Expanded(child: SizedBox(),),
                   
@@ -69,6 +62,46 @@ class BottomControls extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class PreviousButton extends StatelessWidget {
+  const PreviousButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AudioPlaylistComponent(
+      playlistBuilder: (context, playList, child){
+        return IconButton(
+          splashColor: lightAccentColor,
+          highlightColor: lightAccentColor.withOpacity(0.5),
+          icon: Icon(Icons.skip_previous, color: Colors.white, size: 40,),
+          onPressed: playList.previous,
+        );
+      },      
+    );
+  }
+}
+
+class NextButton extends StatelessWidget {
+  const NextButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AudioPlaylistComponent(
+      playlistBuilder: (context, playList, child){
+        return IconButton(
+          splashColor: lightAccentColor,
+          highlightColor: lightAccentColor.withOpacity(0.5),
+          icon: Icon(Icons.skip_next, color: Colors.white, size: 40,),
+          onPressed: playList.next,
+        );
+      }
     );
   }
 }
